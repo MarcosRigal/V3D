@@ -5,10 +5,9 @@ fsiv_convert_image_byte_to_float(const cv::Mat &img)
 {
     CV_Assert(img.depth() == CV_8U);
     cv::Mat out;
-    //! TODO
-    // Hint: use cv::Mat::convertTo().
 
-    //
+    img.convertTo(out, CV_32F, 1.0 / 255.0);    
+    
     CV_Assert(out.rows == img.rows && out.cols == img.cols);
     CV_Assert(out.depth() == CV_32F);
     CV_Assert(img.channels() == out.channels());
