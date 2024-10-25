@@ -38,22 +38,19 @@ fsiv_find_min_max_loc_1(cv::Mat const& input,
 {
     CV_Assert(input.depth()==CV_8U);
 
-    //! TODO: do a rows/cols scanning to find the first min/max values. 
-    // Hint: use cv::split to get the input image channels.
-    
     CV_Assert( !input.empty() );
 
-    std::vector<cv::Mat> canales;
-    cv::split(input, canales);
+    std::vector<cv::Mat> channels;
+    cv::split(input, channels);
 
-    for(size_t c = 0; c<canales.size(); ++c)
+    for(size_t c = 0; c<channels.size(); ++c)
     {
         cv::uint8_t aux_min_v;
         cv::uint8_t aux_max_v;
         cv::Point aux_min_loc;
         cv::Point aux_max_loc;
 
-        find_min_max_in_channel(canales[c], aux_min_v, aux_max_v, aux_min_loc, aux_max_loc);
+        find_min_max_in_channel(channels[c], aux_min_v, aux_max_v, aux_min_loc, aux_max_loc);
               
         min_v.push_back(aux_min_v);
         max_v.push_back(aux_max_v);
@@ -61,7 +58,6 @@ fsiv_find_min_max_loc_1(cv::Mat const& input,
         max_loc.push_back(aux_max_loc);
  
     }
-    //
 
     CV_Assert(input.channels()==min_v.size());
     CV_Assert(input.channels()==max_v.size());
@@ -75,12 +71,26 @@ fsiv_find_min_max_loc_2(cv::Mat const& input,
     std::vector<cv::Point>& min_loc, std::vector<cv::Point>& max_loc)
 {
 
-    //! TODO: Find the first min/max values using cv::minMaxLoc function.    
-    // Hint: use cv::split to get the input image channels.
+    CV_Assert( !input.empty() );
 
+    std::vector<cv::Mat> channels;
+    cv::split(input, channels);
 
+    for(size_t c = 0; c<channels.size(); ++c)
+    {
+        double aux_min_v;
+        double aux_max_v;
+        cv::Point aux_min_loc;
+        cv::Point aux_max_loc;
 
-    //
+        cv::minMaxLoc(channels[c], &aux_min_v, &aux_max_v, &aux_min_loc, &aux_max_loc);
+              
+        min_v.push_back(aux_min_v);
+        max_v.push_back(aux_max_v);
+        min_loc.push_back(aux_min_loc);
+        max_loc.push_back(aux_max_loc);
+ 
+    }
 
     CV_Assert(input.channels()==min_v.size());
     CV_Assert(input.channels()==max_v.size());
