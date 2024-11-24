@@ -21,4 +21,5 @@ la imagen y se miden tiempos.
 * 1.8
 - Add main program to show extremes.
 - Rename esqueleto.cpp as boilerplate.cpp
-
+* 1.9
+- Deleted boilerplate.cpp

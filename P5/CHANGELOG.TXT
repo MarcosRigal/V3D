@@ -1,0 +1,8 @@
+* 1.0
+- Start release.
+* 1.1
+- Added a function to compute ground truth images from consensus images.
+- Adapted to course 24-25
+* 1.2
+- Fixed incorrect suggestion regarding gradient magnitude histogram (no need to normalize)
+- Improved tests for fsiv_compute_confusion_matrix  
