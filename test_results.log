@@ -1,0 +1,95 @@
+Test Results Summary:
+=====================
+Random seed: 37864505850182
+fsiv_find_min_max_loc_1 (one channels) ...  Ok!
+fsiv_find_min_max_loc_1 (three channels) ...  Ok!
+fsiv_find_min_max_loc_2 (one channels, CV_8U) ...  Ok!
+fsiv_find_min_max_loc_2 (one channels, CV_32F) ...  Ok!
+fsiv_find_min_max_loc_2 (three channels, CV_8U) ...  Ok!
+fsiv_find_min_max_loc_2 (three channels, CV_32F) ...  Ok!
+You pass 6 of 6 tests.
+[P1] Test passed.
+======================
+Random seed: 37872561727860
+Testing fsiv_convert_image_byte_to_float CV_8UC1 ...  Ok!
+Testing fsiv_convert_image_byte_to_float CV_8UC3 ...  Ok!
+Testing fsiv_convert_image_float_to_byte CV_32FC1 ...  Ok!
+Testing fsiv_convert_image_float_to_byte CV_32FC3 ...  Ok!
+Testing convert_image_bgr_to_hsv ...  Ok!
+Testing convert_image_hsv_to_bgr ...  Ok!
+Testing fsiv_cbg_process (GRAY, contrast) ...  Ok!
+Testing fsiv_cbg_process (GRAY, brightness) ...  Ok!
+Testing fsiv_cbg_process (GRAY, gamma) ...  Ok!
+Testing fsiv_cbg_process (GRAY) ... Test fail: cv::norm(my_img-your_img)=498.134 < 0.1!
+\t test data file: test-10-37872561727860.xml
+Testing fsiv_cbg_process (BGR, only_luma=false) ... [ WARN:0] global ./modules/core/src/matrix_expressions.cpp (1333) assign OpenCV/MatExpr: processing of multi-channel arrays might be changed in the future: https://github.com/opencv/opencv/issues/16739
+Test fail: cv::norm(my_img-your_img)=835.801 < 0.1!
+\t test data file: test-11-37872561727860.xml
+Testing fsiv_cbg_process (BGR, only_luma=true) ... Test fail: cv::norm(my_img-your_img)=645.017 < 0.1!
+\t test data file: test-12-37872561727860.xml
+You pass 9 of 12 tests.
+[P2] Test passed.
+======================
+Random seed: 37881003447247
+Testing fsiv_color_rescaling ...  Ok!
+Testing fsiv_convert_bgr_to_gray ...  Ok!
+Testing fsiv_gray_world_color_balance ...  Ok!
+Testing fsiv_compute_image_histogram ...  Ok!
+Testing fsiv_compute_histogram_percentile (p_value==0.82) ...  Ok!
+Testing fsiv_white_patch_color_balance (p=0 ) ... Test fail: cv::norm(my_img-your_img)=4.79583<0.1!
+\t test data file: test-6-37881003447247.xml
+Testing fsiv_white_patch_color_balance (p=42) ...  Ok!
+You pass 6 of 7 tests.
+[P3] Test passed.
+======================
+Random seed: 37889837818766
+Testing fsiv_create_box_filter (r=33) ...  Ok!
+Testing fsiv_create_gaussian_filter (r=8) ...  Ok!
+Testing fsiv_fill_expansion (CV_8UC1 r=2) ...  Ok!
+Testing fsiv_fill_expansion (CV_32FC1 r=4) ...  Ok!
+Testing fsiv_circular_expansion (CV_8UC1 r=8) ...  Ok!
+Testing fsiv_circular_expansion (CV_32FC1 r=2) ...  Ok!
+Testing fsiv_filter2D (r=3) ...  Ok!
+Testing fsiv_combine_images (CV_32FC1 a=0.42, b=0.58) ...  Ok!
+Testing fsiv_usm_enhance (g=1.19, r=3, filter_type=0 , circular=0) ...  Ok!
+Testing fsiv_usm_enhance (g=1.05, r=8, filter_type=1 , circular=0) ...  Ok!
+Testing fsiv_usm_enhance (g=1.92, r=8, filter_type=0 , circular=1) ...  Ok!
+You pass 11 of 11 tests.
+[P4] Test passed.
+======================
+Random seed: 37899157326761
+fsiv_compute_derivate (s_ap=3, r_g=0) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:14: error: (-215:Assertion failed) dx.size() == img.size() in function 'fsiv_compute_derivate'
+
+fsiv_compute_derivate (s_ap=1, r_g=2) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:14: error: (-215:Assertion failed) dx.size() == img.size() in function 'fsiv_compute_derivate'
+
+fsiv_compute_gradient_magnitude ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:32: error: (-215:Assertion failed) gradient.size() == dx.size() in function 'fsiv_compute_gradient_magnitude'
+
+fsiv_compute_gradient_histogram (n_bins=106) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:43: error: (-215:Assertion failed) hist.rows == n_bins in function 'fsiv_compute_gradient_histogram'
+
+fsiv_compute_histogram_percentile (p=0) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:57: error: (-215:Assertion failed) idx >= 0 && idx < hist.rows in function 'fsiv_compute_histogram_percentile'
+
+fsiv_compute_histogram_percentile (p=1) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:57: error: (-215:Assertion failed) idx >= 0 && idx < hist.rows in function 'fsiv_compute_histogram_percentile'
+
+fsiv_compute_histogram_percentile (p=0.4) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:57: error: (-215:Assertion failed) idx >= 0 && idx < hist.rows in function 'fsiv_compute_histogram_percentile'
+
+fsiv_compute_histogram_idx_to_value (idx=9 n_bins=11 max_value=10 min_value=2) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:74: error: (-215:Assertion failed) value >= min_value in function 'fsiv_histogram_idx_to_value'
+
+fsiv_percentile_edge_detector (n_bins=104, th=0.99) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:92: error: (-215:Assertion failed) edges.size() == gradient.size() in function 'fsiv_percentile_edge_detector'
+
+fsiv_otsu_edge_detector ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:106: error: (-215:Assertion failed) edges.size() == gradient.size() in function 'fsiv_otsu_edge_detector'
+
+fsiv_canny_edge_detector (th1 = 0.28 th2=0.79 n_bins=100) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:124: error: (-215:Assertion failed) edges.size() == dx.size() in function 'fsiv_canny_edge_detector'
+
+fsiv_compute_ground_truth_image (consensus = 0.51) ... Error: OpenCV(4.5.4) /home/marcos/Repositories/V3D/P5/common_code.cpp:135: error: (-215:Assertion failed) consensus_img.size() == gt.size() in function 'fsiv_compute_ground_truth_image'
+
+fsiv_compute_confusion_matrix (labels {0, 1}) ...  Ok!
+fsiv_compute_confusion_matrix (labels {0, 255}) ...  Ok!
+fsiv_compute_sensitivity ... Test fail: cv::abs(my_v-your_v)=0.647059 (should be 0.0!)
+\t test data file: test-15-37899157326761.xml
+fsiv_compute_precision ... Test fail: cv::abs(my_v-your_v)=0.029703 (should be 0.0!)
+\t test data file: test-16-37899157326761.xml
+fsiv_compute_F1_score ... Test fail: cv::abs(my_v-your_v)=0.472103 (should be 0.0!)
+\t test data file: test-17-37899157326761.xml
+You pass 2 of 17 tests.
+[P5] Test passed.
+======================

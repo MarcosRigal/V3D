@@ -142,15 +142,38 @@ void fsiv_compute_confusion_matrix(cv::Mat const &gt, cv::Mat const &pred, cv::M
     CV_Assert(pred.type() == CV_8UC1);
     CV_Assert(gt.size() == pred.size());
 
-    // TODO
-    // Remember: a edge detector confusion matrix is a 2x2 matrix where the
-    // rows are ground truth {Positive: "is edge", Negative: "is not edge"} and
-    // the columns are the predictions labels {"is edge", "is not edge"}
-    // A pixel value means edge if it is <> 0, else is a "not edge" pixel.
+    // Initialize confusion matrix elements
+    float TP = 0.0f;
+    float TN = 0.0f;
+    float FP = 0.0f;
+    float FN = 0.0f;
 
-    //
+    // Iterate over each pixel to populate the confusion matrix
+    for (int y = 0; y < gt.rows; ++y)
+    {
+        for (int x = 0; x < gt.cols; ++x)
+        {
+            bool gt_edge = gt.at<uchar>(y, x) != 0;
+            bool pred_edge = pred.at<uchar>(y, x) != 0;
+
+            if (gt_edge && pred_edge)
+                TP += 1.0f;
+            else if (!gt_edge && !pred_edge)
+                TN += 1.0f;
+            else if (!gt_edge && pred_edge)
+                FP += 1.0f;
+            else if (gt_edge && !pred_edge)
+                FN += 1.0f;
+        }
+    }
+
+    // Create the confusion matrix
+    cm = (cv::Mat_<float>(2, 2) << TP, FN,
+                                   FP, TN);
+
+    // Validate the confusion matrix
     CV_Assert(cm.type() == CV_32FC1);
-    CV_Assert(cv::abs(cv::sum(cm)[0] - (gt.rows * gt.cols)) < 1.0e-6);
+    CV_Assert(cv::abs(cv::sum(cm)[0] - static_cast<float>(gt.rows * gt.cols)) < 1.0e-6);
 }
 
 float fsiv_compute_sensitivity(cv::Mat const &cm)
