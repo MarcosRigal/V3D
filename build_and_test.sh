@@ -55,7 +55,7 @@ for folder in "${folders[@]}"; do
 
         # Return to the parent folder and clean up
         cd ..
-        rm -rf build
+        # rm -rf build
 
         # Return to the base directory
         cd ..
