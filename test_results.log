@@ -1,6 +1,6 @@
 Test Results Summary:
 =====================
-Random seed: 4320653292401
+Random seed: 5454796127969
 Testing fsiv_convert_image_byte_to_float CV_8UC1 ...  Ok!
 Testing fsiv_convert_image_byte_to_float CV_8UC3 ...  Ok!
 Testing fsiv_convert_image_float_to_byte CV_32FC1 ...  Ok!
@@ -11,10 +11,8 @@ Testing fsiv_cbg_process (GRAY, contrast) ...  Ok!
 Testing fsiv_cbg_process (GRAY, brightness) ...  Ok!
 Testing fsiv_cbg_process (GRAY, gamma) ...  Ok!
 Testing fsiv_cbg_process (GRAY) ...  Ok!
-Testing fsiv_cbg_process (BGR, only_luma=false) ... [ WARN:0] global ./modules/core/src/matrix_expressions.cpp (1333) assign OpenCV/MatExpr: processing of multi-channel arrays might be changed in the future: https://github.com/opencv/opencv/issues/16739
- Ok!
-Testing fsiv_cbg_process (BGR, only_luma=true) ... Test fail: cv::norm(my_img-your_img)=1034.72 < 0.1!
-\t test data file: test-12-4320653292401.xml
-You pass 11 of 12 tests.
+Testing fsiv_cbg_process (BGR, only_luma=false) ...  Ok!
+Testing fsiv_cbg_process (BGR, only_luma=true) ...  Ok!
+You pass 12 of 12 tests.
 [P2] Test passed.
 ======================
