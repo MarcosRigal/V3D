@@ -51,3 +51,12 @@ Consolidate compiler generated dependencies of target edge_detector_test_common_
 [100%] Built target edge_detector_test_common_code
 [P5] Build successful.
 ======================
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marcos/Repositories/V3D/P6/build
+Consolidate compiler generated dependencies of target augReal
+[ 50%] Built target augReal
+Consolidate compiler generated dependencies of target camera_calibration
+[100%] Built target camera_calibration
+[P6] Build successful.
+======================
