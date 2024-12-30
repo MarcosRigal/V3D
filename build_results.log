@@ -2,61 +2,10 @@ Build Results Summary:
 ======================
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P1/build
-Consolidate compiler generated dependencies of target show_extremes
-[ 25%] Built target show_extremes
-Consolidate compiler generated dependencies of target show_img
-[ 41%] Built target show_img
-Consolidate compiler generated dependencies of target show_video
-[ 58%] Built target show_video
-Consolidate compiler generated dependencies of target comp_stats
-[ 75%] Built target comp_stats
-Consolidate compiler generated dependencies of target fsiv_tutorial_opencv_test_common_code
-[100%] Built target fsiv_tutorial_opencv_test_common_code
-[P1] Build successful.
-======================
--- Configuring done
--- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P2/build
-Consolidate compiler generated dependencies of target cbg_process
-[ 50%] Built target cbg_process
-Consolidate compiler generated dependencies of target cbg_process_test_common_code
-[100%] Built target cbg_process_test_common_code
-[P2] Build successful.
-======================
--- Configuring done
--- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P3/build
-Consolidate compiler generated dependencies of target color_balance
-[ 50%] Built target color_balance
-Consolidate compiler generated dependencies of target color_balance_test_common_code
-[100%] Built target color_balance_test_common_code
-[P3] Build successful.
-======================
--- Configuring done
--- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P4/build
-Consolidate compiler generated dependencies of target usm_enhance
-[ 50%] Built target usm_enhance
-Consolidate compiler generated dependencies of target usm_enhance_test_common_code
-[100%] Built target usm_enhance_test_common_code
-[P4] Build successful.
-======================
--- Configuring done
--- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P5/build
-Consolidate compiler generated dependencies of target edge_detector
-[ 50%] Built target edge_detector
-Consolidate compiler generated dependencies of target edge_detector_test_common_code
-[100%] Built target edge_detector_test_common_code
-[P5] Build successful.
-======================
--- Configuring done
--- Generating done
--- Build files have been written to: /home/marcos/Repositories/V3D/P6/build
-Consolidate compiler generated dependencies of target augReal
-[ 50%] Built target augReal
-Consolidate compiler generated dependencies of target camera_calibration
-[100%] Built target camera_calibration
-[P6] Build successful.
+-- Build files have been written to: /home/marcos/Repositories/V3D/P7/build
+Consolidate compiler generated dependencies of target stereo_calibrate
+[ 50%] Building CXX object CMakeFiles/stereo_calibrate.dir/stereo_calibrate.cpp.o
+[100%] Linking CXX executable stereo_calibrate
+[100%] Built target stereo_calibrate
+[P7] Build successful.
 ======================

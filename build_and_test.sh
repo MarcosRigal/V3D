@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of directories
-build_folders=("P1" "P2" "P3" "P4" "P5" "P6")
+build_folders=("P1" "P2" "P3" "P4" "P5" "P6" "P7")
 test_folders=("P1" "P2" "P3" "P4" "P5")
 
 # Check if a specific folder is passed as an argument
