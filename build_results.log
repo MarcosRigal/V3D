@@ -81,3 +81,12 @@ Consolidate compiler generated dependencies of target camera_calibration
 [100%] Built target stereo_calibrate
 [P7] Build successful.
 ======================
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marcos/Repositories/V3D/P8/build
+Consolidate compiler generated dependencies of target stereo_checkundistorted
+[ 50%] Building CXX object CMakeFiles/stereo_checkundistorted.dir/stereo_checkundistorted.cpp.o
+[100%] Linking CXX executable stereo_checkundistorted
+[100%] Built target stereo_checkundistorted
+[P8] Build successful.
+======================
