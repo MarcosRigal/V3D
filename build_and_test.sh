@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of directories
-build_folders=("P1" "P2" "P3" "P4" "P5" "P6" "P7")
+build_folders=("P1" "P2" "P3" "P4" "P5" "P6" "P7" "P8" "P9" "P10")
 test_folders=("P1" "P2" "P3" "P4" "P5")
 
 # Check if a specific folder is passed as an argument
@@ -57,9 +57,9 @@ for folder in "${build_folders[@]}"; do
                 echo "======================" >> "../../$test_results_file"
 
                 # Return to the parent folder
-                cd ..
             fi
         fi
+        cd ..
 
 
         # Return to the base directory
