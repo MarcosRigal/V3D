@@ -99,3 +99,12 @@ Consolidate compiler generated dependencies of target stereo_disparity
 [100%] Built target stereo_disparity
 [P9] Build successful.
 ======================
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marcos/Repositories/V3D/P10/build
+Consolidate compiler generated dependencies of target stereo_sparse
+[ 50%] Building CXX object CMakeFiles/stereo_sparse.dir/stereo_sparse.cpp.o
+[100%] Linking CXX executable stereo_sparse
+[100%] Built target stereo_sparse
+[P10] Build successful.
+======================
