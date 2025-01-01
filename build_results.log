@@ -90,3 +90,12 @@ Consolidate compiler generated dependencies of target stereo_checkundistorted
 [100%] Built target stereo_checkundistorted
 [P8] Build successful.
 ======================
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marcos/Repositories/V3D/P9/build
+Consolidate compiler generated dependencies of target stereo_disparity
+[ 50%] Building CXX object CMakeFiles/stereo_disparity.dir/stereo_disparity.cpp.o
+[100%] Linking CXX executable stereo_disparity
+[100%] Built target stereo_disparity
+[P9] Build successful.
+======================
