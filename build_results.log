@@ -60,24 +60,10 @@ Consolidate compiler generated dependencies of target camera_calibration
 [100%] Built target camera_calibration
 [P6] Build successful.
 ======================
--- The C compiler identification is GNU 11.4.0
--- The CXX compiler identification is GNU 11.4.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Found OpenCV: /usr (found version "4.5.4") 
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/marcos/Repositories/V3D/P7/build
-[ 50%] Building CXX object CMakeFiles/stereo_calibrate.dir/stereo_calibrate.cpp.o
-[100%] Linking CXX executable stereo_calibrate
+Consolidate compiler generated dependencies of target stereo_calibrate
 [100%] Built target stereo_calibrate
 [P7] Build successful.
 ======================
@@ -85,8 +71,6 @@ Consolidate compiler generated dependencies of target camera_calibration
 -- Generating done
 -- Build files have been written to: /home/marcos/Repositories/V3D/P8/build
 Consolidate compiler generated dependencies of target stereo_checkundistorted
-[ 50%] Building CXX object CMakeFiles/stereo_checkundistorted.dir/stereo_checkundistorted.cpp.o
-[100%] Linking CXX executable stereo_checkundistorted
 [100%] Built target stereo_checkundistorted
 [P8] Build successful.
 ======================
@@ -94,8 +78,6 @@ Consolidate compiler generated dependencies of target stereo_checkundistorted
 -- Generating done
 -- Build files have been written to: /home/marcos/Repositories/V3D/P9/build
 Consolidate compiler generated dependencies of target stereo_disparity
-[ 50%] Building CXX object CMakeFiles/stereo_disparity.dir/stereo_disparity.cpp.o
-[100%] Linking CXX executable stereo_disparity
 [100%] Built target stereo_disparity
 [P9] Build successful.
 ======================
@@ -103,8 +85,6 @@ Consolidate compiler generated dependencies of target stereo_disparity
 -- Generating done
 -- Build files have been written to: /home/marcos/Repositories/V3D/P10/build
 Consolidate compiler generated dependencies of target stereo_sparse
-[ 50%] Building CXX object CMakeFiles/stereo_sparse.dir/stereo_sparse.cpp.o
-[100%] Linking CXX executable stereo_sparse
 [100%] Built target stereo_sparse
 [P10] Build successful.
 ======================
