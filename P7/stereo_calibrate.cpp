@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
         criteria
     );
 
-    std::cout << "✅ Calibración completada. RMS de reproyección: " << rms << std::endl;
+    std::cout << "✅ Calibración completada. RMS: " << rms << std::endl;
 
     std::cout << "🔍 Matriz de cámara Izquierda (LEFT_K):\n" << cameraMatrixL << std::endl;
     std::cout << "🔍 Coef. de distorsión Izquierda (LEFT_D):\n" << distCoeffsL << std::endl;
