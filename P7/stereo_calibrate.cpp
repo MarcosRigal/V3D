@@ -2,44 +2,27 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <iomanip>
 #include <dirent.h>
-#include <sys/types.h>
-#include <algorithm>
 
-// Preprocess images
-cv::Mat preprocessImage(const cv::Mat &img, bool applyBlur, int blurKernel) {
-    cv::Mat gray;
-    cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
-    cv::equalizeHist(gray, gray);
-
-    if (applyBlur) {
-        cv::GaussianBlur(gray, gray, cv::Size(blurKernel, blurKernel), 0);
-    }
-
-    return gray;
-}
-
-// Split stereo image into left and right images
 void splitStereoImage(const cv::Mat &stereoImg, cv::Mat &leftImg, cv::Mat &rightImg) {
     int halfWidth = stereoImg.cols / 2;
     leftImg = stereoImg(cv::Rect(0, 0, halfWidth, stereoImg.rows)).clone();
     rightImg = stereoImg(cv::Rect(halfWidth, 0, halfWidth, stereoImg.rows)).clone();
 }
 
-// List files in a directory with a specific extension
 std::vector<std::string> listFiles(const std::string &path, const std::string &extension) {
     std::vector<std::string> files;
     DIR *dir = opendir(path.c_str());
     if (dir == nullptr) {
-        perror("❌ Error opening directory");
+        perror("❌ Error abriendo directorio");
         return files;
     }
 
     struct dirent *entry;
     while ((entry = readdir(dir)) != nullptr) {
         std::string filename(entry->d_name);
-        if (filename.find(extension) != std::string::npos) {
+        if (filename.size() >= extension.size() &&
+            filename.find(extension) == (filename.size() - extension.size())) {
             files.push_back(path + "/" + filename);
         }
     }
@@ -50,115 +33,143 @@ std::vector<std::string> listFiles(const std::string &path, const std::string &e
 
 int main(int argc, char **argv) {
     if (argc != 3) {
-        std::cerr << "Usage: ./stereo_calibrate <image_dir> <output_path>\n";
+        std::cerr << "Uso: " << argv[0] << " <directorio_imagenes> <fichero_salida.yml>\n";
         return -1;
     }
 
-    std::string imgDir = argv[1];
+    std::string imgDir     = argv[1];
     std::string outputFile = argv[2];
 
-    cv::Size CheckerBoardSize = {7, 5}; // Checkerboard dimensions
-    double SquareSize = 0.02875; // Size of each square in meters
+    cv::Size checkerboardSize = {7, 5};
+    double squareSize = 0.02875;
 
     std::vector<std::string> stereoImages = listFiles(imgDir, ".jpg");
-
     if (stereoImages.empty()) {
-        std::cerr << "❌ No images found in the given directory.\n";
+        std::cerr << "❌ No se han encontrado imágenes en el directorio dado.\n";
         return -1;
     }
 
     std::vector<std::vector<cv::Point3f>> objectPoints;
     std::vector<std::vector<cv::Point2f>> imagePointsL, imagePointsR;
+
     cv::Size referenceImageSize;
 
-    double bestRMS = DBL_MAX;
-    double currentRMS;
-    cv::Mat bestCameraMatrixL = cv::Mat::eye(3, 3, CV_64F);
-    cv::Mat bestDistCoeffsL = cv::Mat::zeros(1, 5, CV_64F);
-    cv::Mat bestCameraMatrixR = cv::Mat::eye(3, 3, CV_64F);
-    cv::Mat bestDistCoeffsR = cv::Mat::zeros(1, 5, CV_64F);
-    cv::Mat bestR, bestT, bestE, bestF;
-
-    // Debugging Outputs
-    std::cout << "🔧 Starting Stereo Calibration Process...\n";
+    std::cout << "🔧 Iniciando proceso de calibración estéreo...\n";
 
     for (const auto &imagePath : stereoImages) {
-        cv::Mat stereoImg = cv::imread(imagePath);
+        cv::Mat stereoImg = cv::imread(imagePath, cv::IMREAD_GRAYSCALE);
         if (stereoImg.empty()) {
-            std::cerr << "❌ Could not load image: " << imagePath << std::endl;
+            std::cerr << "❌ No se pudo cargar la imagen: " << imagePath << std::endl;
             continue;
         }
 
-        cv::Mat imgL, imgR;
-        splitStereoImage(stereoImg, imgL, imgR);
+        cv::Mat grayL, grayR;
+        splitStereoImage(stereoImg, grayL, grayR);
 
-        if (referenceImageSize.empty()) referenceImageSize = imgL.size();
-        else if (imgL.size() != referenceImageSize) {
-            std::cerr << "❌ Image size mismatch: " << imagePath << std::endl;
+        if (referenceImageSize.empty()) {
+            referenceImageSize = grayL.size();
+        } else if (grayL.size() != referenceImageSize) {
+            std::cerr << "❌ Inconsistencia de tamaños en: " << imagePath << std::endl;
             continue;
         }
-
-        cv::Mat grayL = preprocessImage(imgL, true, 5);
-        cv::Mat grayR = preprocessImage(imgR, true, 5);
 
         std::vector<cv::Point2f> cornersL, cornersR;
-        bool foundL = cv::findChessboardCornersSB(grayL, CheckerBoardSize, cornersL);
-        bool foundR = cv::findChessboardCornersSB(grayR, CheckerBoardSize, cornersR);
+        bool foundL = cv::findChessboardCorners(
+            grayL, checkerboardSize, cornersL,
+            cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE
+        );
+        bool foundR = cv::findChessboardCorners(
+            grayR, checkerboardSize, cornersR,
+            cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE
+        );
 
         if (foundL && foundR) {
             cv::cornerSubPix(
-                grayL, cornersL, cv::Size(5, 5), cv::Size(-1, -1),
-                cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 100, 0.01));
+                grayL,
+                cornersL,
+                cv::Size(11, 11),
+                cv::Size(-1, -1),
+                cv::TermCriteria(cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS, 60, 1e-6)
+            );
+
             cv::cornerSubPix(
-                grayR, cornersR, cv::Size(5, 5), cv::Size(-1, -1),
-                cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 100, 0.01));
+                grayR,
+                cornersR,
+                cv::Size(11, 11),
+                cv::Size(-1, -1),
+                cv::TermCriteria(cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS, 60, 1e-6)
+            );
 
             std::vector<cv::Point3f> obj;
-            for (int i = 0; i < CheckerBoardSize.height; ++i)
-                for (int j = 0; j < CheckerBoardSize.width; ++j)
-                    obj.emplace_back(j * SquareSize, i * SquareSize, 0);
+            obj.reserve(checkerboardSize.width * checkerboardSize.height);
+            for (int i = 0; i < checkerboardSize.height; ++i) {
+                for (int j = 0; j < checkerboardSize.width; ++j) {
+                    obj.emplace_back(j * squareSize, i * squareSize, 0);
+                }
+            }
 
             objectPoints.push_back(obj);
             imagePointsL.push_back(cornersL);
             imagePointsR.push_back(cornersR);
         } else {
-            std::cerr << "⚠️ Chessboard not found in image: " << imagePath << std::endl;
+            std::cerr << "⚠️ No se encontró el tablero en la imagen: " << imagePath << std::endl;
         }
     }
 
-    std::cout << "🔄 Performing Stereo Calibration...\n";
+    if (objectPoints.empty()) {
+        std::cerr << "❌ No se han detectado esquinas de tablero en ninguna imagen.\n";
+        return -1;
+    }
 
-    currentRMS = cv::stereoCalibrate(
-        objectPoints, imagePointsL, imagePointsR,
-        bestCameraMatrixL, bestDistCoeffsL,
-        bestCameraMatrixR, bestDistCoeffsR,
-        referenceImageSize, bestR, bestT, bestE, bestF,
-        cv::CALIB_FIX_ASPECT_RATIO | cv::CALIB_ZERO_TANGENT_DIST | cv::CALIB_SAME_FOCAL_LENGTH,
-        cv::TermCriteria(cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS, 100, 1e-6));
+    cv::Mat cameraMatrixL = cv::initCameraMatrix2D(objectPoints, imagePointsL, referenceImageSize, 0);
+    cv::Mat distCoeffsL   = cv::Mat::zeros(1, 5, CV_64F);
+    cv::Mat cameraMatrixR = cv::initCameraMatrix2D(objectPoints, imagePointsR, referenceImageSize, 0);
+    cv::Mat distCoeffsR   = cv::Mat::zeros(1, 5, CV_64F);
 
-    std::cout << "✅ Calibration Completed with RMS Error: " << currentRMS << std::endl;
+    cv::Mat R, T, E, F;
 
-    // Debugging Output for Calibration Matrices
-    std::cout << "🔍 Left Camera Matrix:\n" << bestCameraMatrixL << std::endl;
-    std::cout << "🔍 Left Distortion Coefficients:\n" << bestDistCoeffsL << std::endl;
-    std::cout << "🔍 Right Camera Matrix:\n" << bestCameraMatrixR << std::endl;
-    std::cout << "🔍 Right Distortion Coefficients:\n" << bestDistCoeffsR << std::endl;
-    std::cout << "🔍 Rotation Matrix:\n" << bestR << std::endl;
-    std::cout << "🔍 Translation Vector:\n" << bestT << std::endl;
+    std::cout << "🔄 Realizando calibración estéreo...\n";
 
-    // Save Results
+    cv::TermCriteria criteria(cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS, 60, 1e-6);
+
+    double rms = cv::stereoCalibrate(
+        objectPoints,
+        imagePointsL,
+        imagePointsR,
+        cameraMatrixL, distCoeffsL,
+        cameraMatrixR, distCoeffsR,
+        referenceImageSize,
+        R, T, E, F,
+        cv::CALIB_USE_INTRINSIC_GUESS,
+        criteria
+    );
+
+    std::cout << "✅ Calibración completada. RMS de reproyección: " << rms << std::endl;
+
+    std::cout << "🔍 Matriz de cámara Izquierda (LEFT_K):\n" << cameraMatrixL << std::endl;
+    std::cout << "🔍 Coef. de distorsión Izquierda (LEFT_D):\n" << distCoeffsL << std::endl;
+    std::cout << "🔍 Matriz de cámara Derecha (RIGHT_K):\n" << cameraMatrixR << std::endl;
+    std::cout << "🔍 Coef. de distorsión Derecha (RIGHT_D):\n" << distCoeffsR << std::endl;
+    std::cout << "🔍 Matriz de rotación (R):\n" << R << std::endl;
+    std::cout << "🔍 Vector de traslación (T):\n" << T << std::endl;
+
     cv::FileStorage fs(outputFile, cv::FileStorage::WRITE);
-    fs << "LEFT_K" << bestCameraMatrixL;
-    fs << "LEFT_D" << bestDistCoeffsL;
-    fs << "RIGHT_K" << bestCameraMatrixR;
-    fs << "RIGHT_D" << bestDistCoeffsR;
-    fs << "R" << bestR;
-    fs << "T" << bestT;
-    fs << "E" << bestE;
-    fs << "F" << bestF;
+    if (!fs.isOpened()) {
+        std::cerr << "❌ Error al crear el fichero de salida: " << outputFile << std::endl;
+        return -1;
+    }
+
+    fs << "LEFT_K" << cameraMatrixL;
+    fs << "LEFT_D" << distCoeffsL;
+    fs << "RIGHT_K" << cameraMatrixR;
+    fs << "RIGHT_D" << distCoeffsR;
+    fs << "R" << R;
+    fs << "T" << T;
+    fs << "E" << E;
+    fs << "F" << F;
+
     fs.release();
 
-    std::cout << "💾 Results saved to: " << outputFile << std::endl;
-
+    std::cout << "💾 Resultados guardados en: " << outputFile << std::endl;
     return 0;
 }
