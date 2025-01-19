@@ -44,7 +44,6 @@ bool loadStereoCalibration(const std::string &filename, StereoParams &params) {
     return true;
 }
 
-// Rectify stereo images
 void rectifyStereoImages(const StereoParams &sti, cv::Mat &left, cv::Mat &right) {
     cv::Mat rect_l, rect_r, proj_mat_l, proj_mat_r, Q;
     cv::Mat Left_Stereo_Map1, Left_Stereo_Map2;
