@@ -13,35 +13,15 @@ Ensure that you have the following installed:
 
 1. Clone the repository and navigate to the project directory.
 
-2. Create a build directory:
+2. Build Project:
    ```bash
-   mkdir build
-   cd build
-   ```
-
-3. Generate the Makefile using CMake:
-   ```bash
-   cmake ..
-   ```
-
-4. Compile the project:
-   ```bash
-   make
+   mkdir build; cd build; cmake ..; make
    ```
 
 ## Usage
 
 Once compiled, you can run the stereo calibration tool as follows:
 
-```bash
-./stereo_calibrate <path_to_images> <output_file>
-```
-
-### Example:
-
-1. Place your stereo images (e.g., `img1.jpg`, `img2.jpg`, ...) in a folder, such as `calibration/`.
-
-2. Run the program with:
    ```bash
    ./stereo_calibrate ../calibration/ ../calibration/out.yml
    ```
