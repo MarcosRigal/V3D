@@ -3,14 +3,12 @@
 #include <fstream>
 #include <vector>
 
-// Function to read images using cv::glob
 void readImages(const std::string& dirPath, std::vector<std::string>& imagePaths) {
     std::string adjustedDir = dirPath;
     if (!adjustedDir.empty() && adjustedDir.back() != '/') {
         adjustedDir += "/";
     }
     
-    // Glob all .jpg files in the directory
     cv::glob(adjustedDir + "*.jpg", imagePaths);
     for (const auto& path : imagePaths) {
         std::cout << "Found image: " << path << std::endl;
@@ -35,11 +33,9 @@ int main(int argc, char **argv) {
     cv::Size checkerboardSize = {7, 5};
     double squareSize = 0.02875;
 
-    // Read all .jpg images from the specified directory
     std::vector<std::string> stereoImages;
     readImages(imgDir, stereoImages);
 
-    // (Optional) Sort them if you need lexical order
     std::sort(stereoImages.begin(), stereoImages.end());
 
     if (stereoImages.empty()) {
@@ -98,7 +94,6 @@ int main(int argc, char **argv) {
                 cv::TermCriteria(cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS, 60, 1e-6)
             );
 
-            // Generate 3D points for the checkerboard pattern
             std::vector<cv::Point3f> obj;
             obj.reserve(checkerboardSize.width * checkerboardSize.height);
             for (int i = 0; i < checkerboardSize.height; ++i) {
@@ -120,7 +115,6 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    // Initial guesses for camera matrices and distortion coefficients
     cv::Mat cameraMatrixL = cv::initCameraMatrix2D(objectPoints, imagePointsL, referenceImageSize, 0);
     cv::Mat distCoeffsL   = cv::Mat::zeros(1, 5, CV_64F);
     cv::Mat cameraMatrixR = cv::initCameraMatrix2D(objectPoints, imagePointsR, referenceImageSize, 0);
@@ -153,7 +147,6 @@ int main(int argc, char **argv) {
     std::cout << "🔍 Rotation matrix (R):\n" << R << std::endl;
     std::cout << "🔍 Translation vector (T):\n" << T << std::endl;
 
-    // Save results to file
     cv::FileStorage fs(outputFile, cv::FileStorage::WRITE);
     if (!fs.isOpened()) {
         std::cerr << "❌ Error creating output file: " << outputFile << std::endl;
