@@ -29,5 +29,5 @@ Run the compiled binares with the following commands:
    ```
 
    ```bash
-   ./augReal 4 ../intrinsics.yml ../video/augreal.mp4
+   ./augReal 3 ../intrinsics.yml ../video/augreal.mp4
    ```
