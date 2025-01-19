@@ -1,15 +1,17 @@
 # Lo que he hecho
 
-_Describe de forma honesta qué funcionalidades has realizado de forma total o parcial, indicando en este caso qué problema has tenido para no poder implementarla de forma completa._
+He implementado todos los TODO's
 
 # Lo que no he hecho
 
 # Enlace al vídeo descriptivo
 
-_No olvides poner en la descripción del vídeo los capítulos de la forma:_
-'
-Capítulos:
-00:00 fsiv_xxxx
-01:30 fsiv_xxxx
-03:00 Ejemplo de ejecución con parámetro X y justificación.
-'
+https://youtu.be/99BAqCQkwGk
+
+## Capítulos:
+* 00:30 fsiv_find_min_max_loc_1
+* 2:33 fsiv_find_min_max_loc_2
+* 03:35 ./show_extremes -c 0
+* 03:45 ./show_extremes -v ../data/campus_000_002.avi
+* 04:00 ./show_extremes ../data/avion.png
+
