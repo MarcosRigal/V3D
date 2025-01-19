@@ -1,15 +1,18 @@
 # Lo que he hecho
 
-_Describe de forma honesta qué funcionalidades has realizado de forma total o parcial, indicando en este caso qué problema has tenido para no poder implementarla de forma completa._
+He hecho todos los todo's de la practica
 
 # Lo que no he hecho
 
 # Enlace al vídeo descriptivo
 
-_No olvides poner en la descripción del vídeo los capítulos de la forma:_
-'
-Capítulos:
-00:00 fsiv_xxxx
-01:30 fsiv_xxxx
-03:00 Ejemplo de ejecución con parámetro X y justificación.
-'
+https://youtu.be/jsuDr2BYWz4
+
+## Capítulos:
+* 00:25 fsiv_color_rescaling
+* 00:40 fsiv_gray_world_color_balance
+* 01:10 fsiv_convert_bgr_to_gray
+* 01:48 fsiv_compute_image_histogram
+* 02:34 fsiv_compute_histogram_percentile
+* 3:00 fsiv_white_patch_color_balance
+* 4:48 ./color_balance -i ../data/paisaje-frio.jpg out.jpg
